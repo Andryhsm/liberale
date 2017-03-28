@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<title>Formulaire de connexion</title>
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootsrap.min.css">
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.miin.css">
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/paper.css">
+			<style type="text/css">
+			body
+			{
+				background: url("img/bg1.jpg") no-repeat fixed;
+				background-size: cover;    
+				color: #fff;
+				font-family: "Calibri"; 
+			}
+
+			.alert
+			{
+				position: absolute;
+				top: 35%;
+				left: 5%;
+				z-index: 0;
+				background-color: rgba(84, 46, 90, 0.66);
+				border-radius: 10px;
+				border-color: rgb(84, 46, 90);
+				font-size: 1.4em;
+			}
+
+			.bg
+			{
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: #000;
+				z-index:1;
+			}			
+
+
+
+			.logo
+			{
+				position: absolute;
+				z-index: 9;
+				left: 5%;
+			}
+
+			li>a:hover
+			{
+				font-size: 1.4em;
+				color:  #fff;
+				text-decoration: none;
+			}
+
+			li>a
+			{
+				background-color: transparent;
+				font-size: 1.4em;
+				color: #fff;
+				text-decoration: none;
+			}
+			.modal{
+				margin-top: 5rem;
+			}
+
+		</style>
+	</head>
+
+	<body>
+
+		<nav class="navbar navbar-default navbar-fixed-top">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		      	<div class="logo">
+					<a href="#"><img src="img/logo.png"></a>
+				</div>
+		    </div>
+
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		      <ul class="nav navbar-nav navbar-right">
+		        <li><a href="index.html">Acceuil</a></li>
+				<li><a href="login.html">Trouver une infirmière</a></li>
+				<li><a href="#">Commander mon matériel</a></li>
+				<li><a href="contact.html">Contact</a></li>
+		      </ul>
+		    </div>
+		  </div>
+		</nav>
+
+		<div class="container-fluid">
+			<div class="marge">
+				<div class="alert alert-dismissible alert-info col-lg-5 col-md-6 col-sm-8 col-xs-10">
+					<form class="form-horizontal" method="POST">
+					  <fieldset>
+					  	<h2 style="color: #fff; text-align: center;">Accédez à votre compte</h2><br>
+					    <div class="form-group">
+					      <label for="email" class="col-lg-3 control-label">E-mail</label>
+					      <div class="col-lg-8">
+					        <input type="email" class="form-control" id="email" name="email" placeholder="Email" style="color: #fff;">
+					      </div>
+					    </div>
+					    <div class="form-group">
+					      <label for="mdp" class="col-lg-3 control-label">Mot de passe</label>
+					      <div class="col-lg-8">
+					        <input type="password" class="form-control" id="mdp" name="mdp" placeholder="Mot de passe" style="color: #fff;">
+					      </div>
+					    </div><br>
+
+					    </fieldset>
+					</form>
+						<div class="form-group">
+					      <div class="col-lg-10 col-lg-offset-3">
+					        <button class="btn btn-warning" id="connexion" type="submit">Se connecter&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></button>&nbsp;&nbsp;&nbsp;&nbsp;
+					        <button class="btn btn-primary" id="inscription" data-toggle="modal" data-target="#myModal">S'inscrire&nbsp;&nbsp;&nbsp; <span class="glyphicon glyphicon-edit" ></span></button>
+							<button class="btn btn-primary hidden btn-lg" id="triggerwarning" data-toggle="modal" data-target="#loginerror"></button>
+					      </div>
+					    </div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal" id="myModal">
+			  <div class="modal-dialog">
+			    <div class="modal-content alert alert-dismissible alert-info col-lg-12">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			        <h4 class="modal-title" style="text-align: center;">Qui vous êtes ?</h4>
+			      </div>
+			      <div class="modal-body">
+			        <div class="form-group">
+					      <div class="col-lg-11 col-lg-offset-1">
+					        <a class="btn btn-default btn-lg" id="patient" href="patient-inscription.html">Un(e) patient(e)&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-user"></span></a>&nbsp;&nbsp;
+					        <a class="btn btn-primary btn-lg" id="infirmiere" href="infirmiere-inscription.html">Un(e) Infirmier(ère)&nbsp; <span class="glyphicon glyphicon-plus" ></span></a>
+					      </div>
+					    </div>
+			      </div>
+			      <div class="modal-footer">
+			      </div>
+			    </div>
+			  </div>
+		</div>
+
+		<div class="modal" id="loginerror">
+			  <div class="modal-dialog">
+			    <div class="modal-content alert alert-dismissible alert-info col-lg-12">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="ferme">&times;</button>
+			        <h4 class="modal-title" style="text-align: center;">Erreur !</h4>
+			      </div>
+			      <div class="modal-body">
+			      	<div class="warning" id="erreur"></div>
+			      </div>
+			      <div class="modal-footer">
+			      </div>
+			    </div>
+			  </div>
+		</div>
+
+		<script type="text/javascript" src="bootstrap/js/jquery.js"></script>
+		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			$('#connexion').click(function(e) {
+				e.preventDefault();
+				
+				var email = $('#email').val();
+				var mdp = $('#mdp').val();
+				var dataString = "email="+email+"&mdp="+mdp;
+
+				if(email != "" && mdp != "")
+				{
+					$.ajax({ 
+		            url: "lib-php/connexion.php",  
+		            type: "POST",  
+		            data: dataString,  
+		            success: function(server_response) 
+		            {  
+		               
+						if (server_response == "Infirmière") 
+						{
+							window.location.href = "liste.php";
+						}
+						else if (server_response == "Patient") 
+						{
+							window.location.href = "carte.php";
+						} else 
+						{
+							$('#erreur').html('<p>'+ server_response +'</p>');
+							$('#triggerwarning').trigger('click');
+							setTimeout(function() {
+								$('#ferme').trigger('click');
+							}, 4000);
+						}
+
+		            },
+		            error: function(server_response) {
+		              	$('#erreur').html('<p>'+ server_response +'</p>');
+						$('#triggerwarning').trigger('click');
+						setTimeout(function() {
+						$('#ferme').trigger('click');
+						}, 40000);
+		            }
+		           });
+				} else {
+						$('#erreur').html('<p> Veuillez indiquer un adresse e-mail valide et un mot de passe. </p>');
+						$('#triggerwarning').trigger('click');
+						setTimeout(function() {
+						$('#ferme').trigger('click');
+						}, 40000);
+				}
+					
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Geolocation</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+
+        <link rel="stylesheet" type="text/css" href="./map/css/paper.css">
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/map/js/jquery-1.10.2.min.js"></script>
+        <script src="/map/js/bootstrap.min.js"></script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoLHs_3FwL58co5zCnTwVqayigUjV9ySw&callback=initMap" async defer></script>
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            #map {
+                height: 100%;
+            }
+            #header-content {
+                height: 16%;
+                margin: 2% 0% -1% 74%;
+            }
+        </style>
+    </head>
+    <body>
+
+        <!-- Modal -->
+        <button class="btn btn-primary hidden btn-lg" id="triggerwarning" data-toggle="modal" data-target="#loginerror"></button>
+        <div class="modal" id="loginerror">
+            <div class="modal-dialog">
+                <div class="modal-content alert alert-dismissible alert-info col-lg-12">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="ferme">&times;</button>
+                        <h4 class="modal-title" style="text-align: center;">Information !</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="warning" id="erreur"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="header-content">
+            <table>
+                <tr>
+                    <td><input class="form-control" type="text" id="address" placeholder="Adresse, lieu, ville"></td>
+                    <td><button class="btn btn-warning" id="chercher" >Rechercher</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="map"></div>
+        <script type="text/javascript">
+            var map;
+
+            var tab = [];
+
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: 49.037, lng: 14.974},
+                    zoom: 18
+                });
+            }
+
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition, hidePosition);
+                } else {
+                    alert("Geolocation is not supported by this browser. Now we trying to get your location through your IP address.");
+                    ipPosition();
+                }
+            }
+
+            //Recuperation de la position de l'utilisateur
+            function showPosition(position) {
+                pos = {
+                    lat: parseFloat(position.coords.latitude),
+                    lng: parseFloat(position.coords.longitude)
+                };
+                map.panTo(pos);
+                var marker = new google.maps.Marker({
+                    position: pos,
+                    map: map,
+                    animation: google.maps.Animation.BOUNCE
+                });
+                /*
+                 var infoWindow = new google.maps.InfoWindow({
+                 content: "Vous êtes ici ! "
+                 });*/
+                marker.setIcon("http://maps.google.com/mapfiles/ms/icons/blue-dot.png");
+                //	infoWindow.open(map, marker);
+            }
+
+            function hidePosition(position) {
+                alert('User denied the access of the position. Now we trying to get your location through your IP address.');
+                ipPosition();
+            }
+
+            function ipPosition() {
+                $.get("http://ipinfo.io", function (response) {
+                    var loc = response.loc.split(',');
+                    pos = {
+                        lat: parseFloat(loc[0]),
+                        lng: parseFloat(loc[1])
+                    };
+                }, "jsonp");
+            }
+            getLocation();
+
+            var markers = [];
+
+            var getMarkerUniqueId = function (lat, lng) {
+                return lat + '_' + lng;
+            }
+
+            //Geocodage des adresses
+            function geocodeAddress(resultsMap) {
+                var geocoder = new google.maps.Geocoder();
+                var address = document.getElementById('address').value;
+                geocoder.geocode({'address': address}, function (results, status) {
+                    if (status === google.maps.GeocoderStatus.OK) {
+                        resultsMap.panTo(results[0].geometry.location);
+                    } else {
+                        alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                });
+            }
+
+            function addMarker(location, user) { // Adds a marker to the map and push to the array.
+                var markerId = user.email; // that will be used to cache this marker in markers object.
+                var image = "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
+                var marker;
+
+                if (markers.hasOwnProperty(user.email)) {
+                    removeMarker(marker, user.email);
+                    alert("Suppression marker ! ");
+                }
+
+                marker = new google.maps.Marker({
+                    position: location,
+                    map: map,
+                    id: markerId,
+                    icon: image
+                });
+
+
+                var p = "<div class='col-lg-12'>";
+                p += "<center><h4>" + user.prenom + " " + user.nom + "</h4></center>";
+                p += "<div class='col-lg-8'>";
+                p += "<p><strong>Téléphone : </strong>" + user.tel + "</p>";
+                p += "<p><strong>Email : </strong>" + user.email + "</p>";
+                p += "<p><strong>Adresse : </strong>" + user.rue + " - " + user.code_postal + " - " + user.ville + "</p>";
+                p += "<p><strong>Type de soin : </strong>" + user.typesoin1 + " - " + user.typesoin2 + " - " + user.typesoin3 + " - " + user.typesoin4 + "</p>";
+                p += "<p><strong>Lieu d'intervention : </strong>" + user.lieu_intervention + "</p>";
+                p += "</div>";
+                p += "<div class='col-lg-4'>";
+                p += "<img src='../image-person/" + user.photo + "' style='width:60%;'/>";
+                p += "</div>";
+                p += "<div class='col-lg-12'>";
+                p += "<center><textarea class='form-control' placeholder='Ecrivez votre commentaire ici' name='commentaire' id='commentaire' type='text'></textarea><br>";
+                p += "<input type='submit' class='btn btn-primary' name='rdv' onclick='rendezVous(\"" + user.email + "\");' value='Prendre rendez-vous' /></center>";
+                p += "</div>";
+                p += "</div>";
+
+                var contentString = p;
+
+                var info = new google.maps.InfoWindow({
+                    content: contentString
+                });
+
+                marker.addListener('click', function () {
+                    info.open(map, marker);
+                });
+
+                markers[markerId] = marker;
+            }
+
+            var removeMarker = function (marker, markerId) {
+                marker.setMap(null); // set markers setMap to null to remove it from map
+                delete markers[markerId]; // delete marker instance from markers object
+            };
+
+            var socket = io();
+
+
+            //Recuperer le contenue du fichier
+            socket.emit('data_patient', "Lire fichier");
+            socket.on('data_patient', function (data) {
+                user = data;
+            });
+
+            check_pos = setInterval(function () {
+                if (typeof pos != 'undefined') {
+                    user.pos = pos;
+                    socket.emit('new_user', user);      //Voici les informations de l utilisateur courant
+                    clearInterval(check_pos);
+                }
+            }, 500);
+
+            socket.on('already', function (data) {
+                $.each(data.visitors, function (key, usr) {
+                    if (usr.type == "infirmier")
+                        addMarker(usr.pos, usr);
+                });
+
+            });
+
+            socket.on('connected', function (data) {
+                if (data.user.type == "infirmier") {
+                    addMarker(data.user.pos, data.user);
+                }
+            });
+
+            //Lorsque la demande est accepter
+            socket.on('dmd_accepter', function (data) 
+            {
+                $('#erreur').html('<p>'+ data +'</p>');
+                $('#triggerwarning').trigger('click');
+            });
+
+            socket.on('dmd_refus', function (data) 
+            {
+                $('#erreur').html('<p>'+ data +'</p>');
+                $('#triggerwarning').trigger('click');
+            });
+
+            socket.on('deconnecter', function (email) {
+                var markerId = email;
+                var marker = markers[markerId];
+                removeMarker(marker, markerId);
+            });
+
+
+            //Demander un rendez vous a l'infirmière specifier
+            function rendezVous(email) 
+            {
+                $('#erreur').html('<p>Votre demande a bien été envoyée !</p>');
+                $('#triggerwarning').trigger('click');
+                var commentaire = $('#commentaire').val();
+                socket.emit('rendez-vous', {email: email, commentaire: commentaire});
+            }
+
+            $("#chercher").click(function () {
+                geocodeAddress(map);
+            });
+        </script>
+    </body>
+</html>

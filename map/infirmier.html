@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Geolocation</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="./map/css/paper.css">
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/map/js/jquery-1.10.2.min.js"></script>
+        <script src="/map/js/bootstrap.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoLHs_3FwL58co5zCnTwVqayigUjV9ySw&callback=initMap" async defer></script>
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            #map {
+                height: 100%;c
+            }
+            #header-content {
+                height: 16%;
+                margin: 2% 0% -1% 74%;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <div id="header-content">
+            <div id="content"></div>
+            <input type="text" id="address" placeholder="Adresse, lieu, ville"></input>
+            <button id="chercher" >Rechercher</button>
+        </div>
+        <div id="map"></div>
+        <script type="text/javascript">
+            var map;
+            var itemsRendeVous = [];
+            
+            var rendeVous = [];
+            var nom = "Liva";
+
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: 49.037, lng: 14.974},
+                    zoom: 18
+                });
+            }
+
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition, hidePosition);
+                } else {
+                    alert("Geolocation is not supported by this browser. Now we trying to get your location through your IP address.");
+                    ipPosition();
+                }
+            }
+
+            //Recuperation de la position de l'utilisateur
+            function showPosition(position) {
+                pos = {
+                    lat: parseFloat(position.coords.latitude),
+                    lng: parseFloat(position.coords.longitude)
+                };
+                map.panTo(pos);
+                var marker = new google.maps.Marker({
+                    position: pos,
+                    map: map,
+                    animation: google.maps.Animation.BOUNCE
+                });
+
+                marker.setIcon("http://maps.google.com/mapfiles/ms/icons/blue-dot.png");
+
+            }
+
+            function hidePosition(position) {
+                alert('User denied the access of the position. Now we trying to get your location through your IP address.');
+                ipPosition();
+            }
+
+            function ipPosition() {
+                $.get("http://ipinfo.io", function (response) {
+                    var loc = response.loc.split(',');
+                    pos = {
+                        lat: parseFloat(loc[0]),
+                        lng: parseFloat(loc[1])
+                    };
+                }, "jsonp");
+            }
+            //Geocodage des adresses
+            function geocodeAddress(resultsMap) {
+                var geocoder = new google.maps.Geocoder();
+                var address = document.getElementById('address').value;
+                geocoder.geocode({'address': address}, function (results, status) {
+                    if (status === google.maps.GeocoderStatus.OK) {
+                        resultsMap.panTo(results[0].geometry.location);
+                    } else {
+                        alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                });
+            }
+            
+            /**** 1 - Geolocalisation de l'utilisateur ***/
+            getLocation();
+
+            var markers = [];
+
+            var getMarkerUniqueId = function (lat, lng) {
+                return lat + '_' + lng;
+            }
+
+            function addMarker(location, user) { // Adds a marker to the map and push to the array.
+                var markerId = user.email; // that will be used to cache this marker in markers object.
+                var image = "http://maps.google.com/mapfiles/ms/icons/green-dot.png";
+                var marker;
+
+                if (markers.hasOwnProperty(user.email)) {
+                    removeMarker(marker, user.email);
+                    alert("Suppression marker ! ");
+                }
+
+             
+
+                marker = new google.maps.Marker({
+                    position: location,
+                    map: map,
+                    id: markerId,
+                    icon: image
+                });
+
+                var p = "<div class='content'>";
+                p += "<center><h4>" + user.prenom + " " + user.nom + "</h4></center>";
+                p += "<div class='col-lg-12'>";
+                p += "<p><strong>Téléphone : </strong>" + user.tel + "</p>";
+                p += "<p><strong>Email : </strong>" + user.email + "</p>";
+                p += "</div>";
+                p += "</div>";
+
+                var contentString = p;
+
+                var info = new google.maps.InfoWindow({
+                    content: contentString
+                });
+                marker.addListener('click', function () {
+                    info.open(map, marker);
+                });
+
+                markers[markerId] = marker;
+            }
+
+            var removeMarker = function (marker, markerId) {
+                marker.setMap(null); // set markers setMap to null to remove it from map
+                delete markers[markerId]; // delete marker instance from markers object
+            };
+
+            var socket = io();
+
+            //Recuperer le contenue du fichier
+            socket.emit('data_infirmier', "Lire fichier");
+            socket.on('data_infirmier', function (data) {
+                user = data;
+                user.type = "infirmier";
+            });
+
+
+            check_pos = setInterval(function () { //create a loop and wait for the response
+                if (typeof pos != 'undefined') { //while the position is not defined the loop is checking every half seconds
+                    user.pos = pos;
+                    /**** 2- Ajout de l'utilisateur dans new user  ***/
+                    socket.emit('new_user', user);
+
+                    clearInterval(check_pos);
+                }
+            }, 500);
+
+
+            socket.on('already', function (data) {
+                $.each(data.visitors, function (key, usr) {
+                    if (usr.type == "patient")
+                        addMarker(usr.pos, usr);
+
+                });
+            });
+            
+            socket.on('connected', function (data) {
+                if (data.user.type == "patient")
+                    addMarker(data.user.pos, data.user);
+            });
+            
+            socket.on('rendez-vous', function(data){
+               var index = 0;
+               rendeVous[data.user.email] = data.user;          //L'utilisateur qui envoie la rendez-vous
+               socket.emit('ajout_liste', data.user);
+               for(var key in rendeVous){
+                    alert(rendeVous[key].email);
+               }
+              // alert(Object.keys(rendeVous).length);
+               
+            });
+            
+            socket.on('perso', function(data){
+               //alert("Un test doit exister ! ");
+            });
+            
+            socket.on('deconnecter', function (email) {
+                var markerId = email;
+                var marker = markers[markerId];
+                removeMarker(marker, markerId);
+                //     alert("Deconnexion ! ");
+            });
+
+            $("#chercher").click(function () {
+                geocodeAddress(map);
+            });
+
+        </script>
+    </body>
+</html>

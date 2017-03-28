@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="fr-FR" class="no-js">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <meta name="viewport" content="width=device-width">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title></title>
+
+        <meta name="robots" content="noindex,follow">
+
+        <link rel="stylesheet" id="bootstrap-css" href="./others/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" id="animate-css" href="./others/animate.css" type="text/css">
+        <link rel="stylesheet" id="magee-shortcode-css" href="./others/shortcode.css" type="text/css">
+        <link rel="stylesheet" id="wds_frontend-css" href="./others/wds_frontend.css" type="text/css" media="all">
+        <link rel="stylesheet" id="wds_effects-css" href="./others/wds_effects.css" type="text/css" media="all">
+        <link rel="stylesheet" id="wds_font-awesome-css" href="./others/font-awesome(1).css" type="text/css" media="all">
+        <link rel="stylesheet" id="wonderplugin-slider-css-css" href="./others/wonderpluginsliderengine.css" type="text/css" media="all">
+        <link rel="stylesheet" id="parent-style-css" href="./others/style.css" type="text/css" media="all">
+        <link rel="stylesheet" href="./others/index.css" type="text/css" media="all">
+
+        <script type="text/javascript" src="./others/jquery.js.téléchargement"></script>
+
+        <script type="text/javascript">
+            /* <![CDATA[ */
+            var object = {"ajaxurl": "http:\/\/localhost\/wordpress\/wp-admin\/admin-ajax.php"};
+            /* ]]> */
+        </script>
+
+        <script src="js/jssor.slider-22.2.10.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            jssor_1_slider_init = function() {
+
+                var jssor_1_options = {
+                    $AutoPlay: true,
+                    $SlideDuration: 800,
+                    $SlideEasing: $Jease$.$OutQuint,
+                    $ArrowNavigatorOptions: {
+                        $Class: $JssorArrowNavigator$
+                    },
+                    $BulletNavigatorOptions: {
+                        $Class: $JssorBulletNavigator$
+                    }
+                };
+                var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+                /*responsive code begin*/
+                /*you can remove responsive code if you don't want the slider scales while window resizing*/
+                function ScaleSlider() {
+                    var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+                    if (refSize) {
+                        refSize = Math.min(refSize, 1920);
+                        jssor_1_slider.$ScaleWidth(refSize);
+                    } else {
+                        window.setTimeout(ScaleSlider, 30);
+                    }
+                }
+                ScaleSlider();
+                $Jssor$.$AddEvent(window, "load", ScaleSlider);
+                $Jssor$.$AddEvent(window, "resize", ScaleSlider);
+                $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
+                /*responsive code end*/
+            };
+        </script>
+        <style>
+
+            .jssorl-oval img {
+                animation-name: jssorl-oval;
+                animation-duration: 1.2s;
+                animation-iteration-count: infinite;
+                animation-timing-function: linear;
+            }
+
+            @keyframes jssorl-oval {
+                from {
+                    transform: rotate(0deg);
+                }
+
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+
+            .jssorb05 {
+                position: absolute;
+            }
+            .jssorb05 div, .jssorb05 div:hover, .jssorb05 .av {
+                position: absolute;
+                /* size of bullet elment */
+                width: 16px;
+                height: 16px;
+                background: url('img/b05.png') no-repeat;
+                overflow: hidden;
+                cursor: pointer;
+            }
+            .jssorb05 div { background-position: -7px -7px; }
+            .jssorb05 div:hover, .jssorb05 .av:hover { background-position: -37px -7px; }
+            .jssorb05 .av { background-position: -67px -7px; }
+            .jssorb05 .dn, .jssorb05 .dn:hover { background-position: -97px -7px; }
+
+            .jssora22l, .jssora22r {
+                display: block;
+                position: absolute;
+                /* size of arrow element */
+                width: 40px;
+                height: 58px;
+                cursor: pointer;
+                background: url('img/a22.png') center center no-repeat;
+                overflow: hidden;
+            }
+            .jssora22l { background-position: -10px -31px; }
+            .jssora22r { background-position: -70px -31px; }
+            .jssora22l:hover { background-position: -130px -31px; }
+            .jssora22r:hover { background-position: -190px -31px; }
+            .jssora22l.jssora22ldn { background-position: -250px -31px; }
+            .jssora22r.jssora22rdn { background-position: -310px -31px; }
+            .jssora22l.jssora22lds { background-position: -10px -31px; opacity: .3; pointer-events: none; }
+            .jssora22r.jssora22rds { background-position: -70px -31px; opacity: .3; pointer-events: none; }
+
+            .btn_up
+            {
+              position: fixed;
+              bottom: 10px;
+              right: 15px;
+              height: 80px;
+              width: 80px;
+              padding: 0;
+            }
+
+            #returnOnTop
+            {
+              display: none;
+              cursor: pointer;
+            }
+
+        </style>
+
+        <!-- Meta OG tags by Kiwi Social Sharing Plugin -->
+        <meta property="og:type" content="article"> 
+        <meta property="og:title" content="Alchem">
+        <meta property="og:image" content="http://localhost/wordpress/wp-content/plugins/kiwi-social-share/admin/images/placeholder-image.png">
+        <meta property="og:url" content="http://localhost/wordpress/">
+        <meta property="og:site_name" content="">
+        <meta property="article:published_time" content="2017-02-28T18:11:19+00:00">
+        <meta property="article:modified_time" content="2017-02-28T18:11:19+00:00">
+        <meta property="og:updated_time" content="2017-02-28T18:11:19+00:00">
+        <!--/end meta tags by Kiwi Social Sharing Plugin -->
+       </head>
+    <body class="home page-template page-template-template-frontpage page-template-template-frontpage-php page page-id-40 has-slider">
+        <div class="wrapper ">
+            <div class="top-wrap">
+                <header class="header-style-1 header-wrap  logo-left">
+                    <div class="main-header " style="display: block;">
+                        <div class="container">
+                            <div class="logo-box alchem_header_style alchem_default_logo">
+                                <a href="./index.html">
+                                    <img class="site-logo normal_logo" alt="" src="./others/Logo-ousoft-HD.png">
+                                </a>
+                            </div>
+                            <button class="site-nav-toggle">
+                                <span class="sr-only">Toggle navigation</span>
+                                <i class="fa fa-bars fa-2x"></i>
+                            </button>
+                            <nav class="site-nav" role="navigation" style="">
+                                <ul id="menu-main" class="main-nav">
+                                    <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="./index.html"><span class="menu-item-label">Accueil</span></a></li>
+                                    <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="./login.html"><span class="menu-item-label">Trouver une infirmière</span></a></li>
+                                    <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="#"><span class="menu-item-label">Commander mon materiel</span></a></li>
+                                    <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="./contact.html"><span class="menu-item-label">Contact</span></a></li>
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="login.html"><span class="menu-item-label">Connexion</span></a></li>
+                                </ul>                    
+                            </nav>
+                        </div>
+                    </div>
+                    <!-- sticky header -->
+                    <div class="fxd-header logo-left" style="top: 0px; display: none;">
+                        <div class="container">
+                            <div class="logo-box text-left alchem_header_style alchem_default_logo">
+                                <a href="./index.html">
+                                    <img class="site-logo normal_logo" alt="" src="./others/Logo-ousoft-HD.png">
+                                </a>
+
+                            </div>
+                            <button class="site-nav-toggle">
+                                <span class="sr-only">Toggle navigation</span>
+                                <i class="fa fa-bars fa-2x"></i>
+                            </button>
+                            <nav class="site-nav" role="navigation" style="">
+                                <ul id="menu-main1" class="main-nav">
+                                    <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="./index.html"><span class="menu-item-label">Accueil</span></a></li>
+                                    <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="./login.html"><span class="menu-item-label">Trouver une infirmière</span></a></li>
+                                    <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="#"><span class="menu-item-label">Commander mon materiel</span></a></li>
+                                    <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="./contact.html"><span class="menu-item-label">Contact</span></a></li>
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="login.html"><span class="menu-item-label">Connexion</span></a></li>
+                                </ul>                    
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div class="clear"></div>
+                </header>  
+            </div>
+            <div id="alchem-home-sections">
+                <section class="section magee-section alchem-home-section-0 alchem-home-style-0 " id="section-1">
+                    <div class="multi-carousel home-banner-slider">
+                        <div class="multi-carousel-inner">
+                            <div id="carousel-banner-section" class="owl-carousel owl-theme owl-loaded owl-drag">
+
+
+
+                                <div id="jssor_1" style="position:relative;margin:0 auto;top:0px;left:0px;width:1500px;height:600px;overflow:hidden;visibility:hidden;">
+                                    <!-- Loading Screen -->
+                                    <div data-u="loading" class="jssorl-oval" style="position:absolute;top:0px;left:0px;text-align:center;background-color:rgba(0,0,0,0.7);">
+                                        <img style="margin-top:-19.0px;position:relative;top:50%;width:38px;height:38px;" src="img/oval.svg" />
+                                    </div>
+                                    <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1500px;height:600px;overflow:hidden;">
+                                        <div>
+                                            <img data-u="image" src="img/sliderimg_001.png" />
+                                            <div style="position:absolute;top:200px;left:450px;width:600px;height:120px;z-index:0;border-radius: 8px;">
+                                                <div style="position:absolute;left:100px;font-size:80px;color:#efb121;line-height:0px; text-align: center;">OU.INF.LIB</div>
+                                                <div style="position:absolute;top:60px;left:15px;width:570px;height:40px;z-index:0;font-size:22px;color:#ffffff;line-height:38px;text-align: center;">Trouver mon infirmière libérale a domicile.</div>
+                                            </div>
+                                            <div style="position:absolute;top:370px;left:350px;width:800px;height:150px;z-index:0;background-color:rgba(0,0,0,0.5);border-radius: 8px;">
+                                                <div style="position:absolute;top:40px;left:15px;width:500px;height:40px;z-index:0;font-size:22px;color:#000000;line-height:38px;">
+
+                                                    <table style="border-style: none; width: 100%;">
+                                                        <td>
+                                                            <a href="./patient-inscription.html" style="margin-left: 72%;" class=" magee-btn-normal btn-md btn-line btn-light">Je suis patient</a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="./infirmiere-inscription.html" style="margin-left: 125%;" class=" magee-btn-normal btn-md btn-line btn-light">Je suis infirmièr(e)</a>
+                                                        </td>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <img data-u="image" src="img/sliderimg_003.png" />
+                                            <div style="position:absolute;top:200px;left:450px;width:600px;height:120px;z-index:0;border-radius: 8px;">
+                                                <div style="position:absolute;left:100px;font-size:80px;color:#efb121;line-height:0px; text-align: center;">OU.INF.LIB</div>
+                                                <div style="position:absolute;top:60px;left:15px;width:570px;height:40px;z-index:0;font-size:22px;color:#ffffff;line-height:38px;text-align: center;">Trouver mon infirmière libérale a domicile.</div>
+                                            </div>
+                                            <div style="position:absolute;top:370px;left:350px;width:800px;height:150px;z-index:0;background-color:rgba(0,0,0,0.5);border-radius: 8px;">
+                                                <div style="position:absolute;top:40px;left:15px;width:500px;height:40px;z-index:0;font-size:22px;color:#000000;line-height:38px;">
+
+                                                    <table style="border-style: none; width: 100%;">
+                                                        <td>
+                                                            <a href="./patient-inscription.html" style="margin-left: 72%;" class=" magee-btn-normal btn-md btn-line btn-light">Je suis patient</a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="./infirmiere-inscription.html" style="margin-left: 125%;" class=" magee-btn-normal btn-md btn-line btn-light">Je suis infirmièr(e)</a>
+                                                        </td>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <img data-u="image" src="img/sliderimg_002.png" />
+                                            <div style="position:absolute;top:200px;left:450px;width:600px;height:120px;z-index:0;border-radius: 8px;">
+                                                <div style="position:absolute;left:100px;font-size:80px;color:#efb121;line-height:0px; text-align: center;">OU.INF.LIB</div>
+                                                <div style="position:absolute;top:60px;left:15px;width:570px;height:40px;z-index:0;font-size:22px;color:#ffffff;line-height:38px;text-align: center;">Trouver mon infirmière libérale a domicile.</div>
+                                            </div>
+                                            <div style="position:absolute;top:370px;left:350px;width:800px;height:150px;z-index:0;background-color:rgba(0,0,0,0.5);border-radius: 8px;">
+                                                <div style="position:absolute;top:40px;left:15px;width:500px;height:40px;z-index:0;font-size:22px;color:#000000;line-height:38px;">
+
+                                                    <table style="border-style: none; width: 100%;">
+                                                        <td>
+                                                            <a href="./patient-inscription.html" style="margin-left: 72%;" class=" magee-btn-normal btn-md btn-line btn-light">Je suis patient</a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="./infirmiere-inscription.html" style="margin-left: 125%;" class=" magee-btn-normal btn-md btn-line btn-light">Je suis infirmièr(e)</a>
+                                                        </td>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Bullet Navigator -->
+                                    <div data-u="navigator" class="jssorb05" style="bottom:16px;right:16px;" data-autocenter="1">
+                                        <!-- bullet navigator item prototype -->
+                                        <div data-u="prototype" style="width:16px;height:16px;"></div>
+                                    </div>
+                                    <!-- Arrow Navigator -->
+                                    <span data-u="arrowleft" class="jssora22l" style="top:0px;left:8px;width:40px;height:58px;" data-autocenter="2"></span>
+                                    <span data-u="arrowright" class="jssora22r" style="top:0px;right:8px;width:40px;height:58px;" data-autocenter="2"></span>
+                                </div>
+                                <script type="text/javascript">jssor_1_slider_init();</script>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section magee-section alchem-home-section-1 alchem-home-style-0" id="section-2">
+                    <div class="section-content">
+                        <div class="container">
+                            <div class="alchem-animated animated fadeInRight" data-animationduration="0.9" data-animationtype="fadeInRight" data-imageanimation="no" style="visibility: visible; animation-duration: 0.9s;">
+                                <div class="magee-promo-box">
+                                    <div class="promo-info">
+                                        <h4 class="alchem_section_1_slogan_title">CONTACTER NOUS</h4>
+                                        <p class="alchem_section_1_slogan_content">Vous avez une remarque, une question? Prenez contact par email, téléphone ou courrier: nous vous donnerons une réponse dans les plus brefs délais.</p>
+                                    </div>
+                                    <div class="promo-action alchem_section_1_button_text"> <a href="./contact.html" class="btn-normal btn-lg"><i class="fa " style="visibility: visible;"></i> Contact</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+
+                <section class="section magee-section alchem-home-section-4 alchem-home-style-0" id="section-5">
+                    <div class="section-content">
+                        <div class="container alchem_section_4_model">
+                            <h2 style="text-align: center" class="section-title alchem_section_4_title">A propos de <strong>Ouinf-lib</strong>.</h2>
+                            <div class=" divider divider-border">
+                            </div>
+                            <div class="section-subtitle alchem_section_4_sub_title"><center>C'est une application qui a été conçu pour aider les patients à trouver facilement les infirmières prés de soit pour effectuer les soins journalier.</center></div>
+                            <div style="height: 60px;"></div>
+                            <div class=" row">
+                                <div class=" col-md-2_5">
+                                    <div class=" divider divider-border">
+                                    </div>
+                                    <div class="alchem-animated alchem_section_4_image animated fadeInDown" data-animationduration="1.2" data-animationtype="fadeInDown" data-imageanimation="no" style="visibility: visible; animation-duration: 1.2s;">
+                                        <img src="./others/b3.jpg" alt="" style="visibility: visible;"><br>
+                                    </div>
+                                </div>
+
+                                <div class=" col-md-3_5">
+                                    <div class="alchem-animated alchem_section_4_feature_image_0 animated fadeInRight" data-animationduration="1.2" data-animationtype="fadeInRight" data-imageanimation="no" style="visibility: visible; animation-duration: 1.2s;">
+                                        <div class="magee-feature-box style2" data-os-animation="fadeOut" style="padding-left: 65px;">
+                                            <div class="icon-box icon-circle " style="border-width: 0;background-color: #333;color: #fff;font-size: 20px;"> <img class="feature-box-icon" src="./others/android-1.png" alt="" style="visibility: visible;"></div>
+                                            <h3 class="alchem_section_4_feature_title_0">ANDROID</h3>          <div class="feature-content">
+                                                <p class="section_4_feature_content_0">Lorem ipsum dolor sit amet, consectetur adipiscingelit. Integer sed magna vel velit dignissim luctus eu n urna. Dapibus ege-stas turpis. Praesent faucibus nisl sit amet nulla sollicitudin.</p>
+                                            </div>
+                                        </div>
+                                        <div class="alchem-animated alchem_section_4_feature_image_1 animated fadeInRight" data-animationduration="1.2" data-animationtype="fadeInRight" data-imageanimation="no" style="visibility: visible; animation-duration: 1.2s;">
+                                            <div class="magee-feature-box style2" data-os-animation="fadeOut" style="padding-left: 65px;">
+                                                <div class="icon-box icon-circle " style="border-width: 0;background-color: #333;color: #fff;font-size: 20px;"> <img class="feature-box-icon" src="./others/apple.png" alt="" style="visibility: visible;" data-pin-nopin="true"></div>
+                                                <h3 class="alchem_section_4_feature_title_1">IOS</h3>          <div class="feature-content">
+                                                    <p class="section_4_feature_content_1">Lorem ipsum dolor sit amet, consectetur adipiscingelit. Integer sed magna vel velit dignissim luctus eu n urna. Dapibus ege-stas turpis. Praesent faucibus nisl sit amet nulla sollicitudin.</p>
+                                                </div>
+                                            </div>
+                                            <div class="alchem-animated alchem_section_4_feature_image_2 animated fadeInRight" data-animationduration="1.2" data-animationtype="fadeInRight" data-imageanimation="no" style="visibility: visible; animation-duration: 1.2s;">
+                                                <div class="magee-feature-box style2" data-os-animation="fadeOut" style="padding-left: 65px;">
+                                                    <div class="icon-box icon-circle " style="border-width: 0;background-color: #333;color: #fff;font-size: 20px;"> <img class="feature-box-icon" src="./others/windows.png" alt="" style="visibility: visible;"></div>
+                                                    <h3 class="alchem_section_4_feature_title_2">LES AUTRES APPAREILS</h3>          <div class="feature-content">
+                                                        <p class="section_4_feature_content_2">Lorem ipsum dolor sit amet, consectetur adipiscingelit. Integer sed magna vel velit dignissim luctus eu n urna. Dapibus ege-stas turpis. Praesent faucibus nisl sit amet nulla sollicitudin.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                </section>
+
+
+                                <section class="section magee-section alchem-home-section-10 alchem-home-style-0" id="section-11">
+                                    <div class="section-content" style="color:#ffffff;">
+                                        <div class="container alchem_section_10_model">
+                                            <div class="alchem-animated animated fadeInDown" data-animationduration="1.2" data-animationtype="fadeInDown" data-imageanimation="no" style="visibility: visible; animation-duration: 1.2s;">
+                                                <h2 style="text-align: center" class="section-title alchem_section_10_title">Trouver facilement les infirmières de votre choix.</h2>
+                                                <div class="divider divider-border center" style="margin-top: 30px;margin-bottom:50px;width:80px;">
+                                                    <div class="divider-inner light" style="border-bottom-width:3px; "></div>
+                                                </div>
+                                                <div style="text-align: center" class="alchem_section_10_button_text">
+                                                    <a href="./login.html" style="" class=" magee-btn-normal btn-md btn-line btn-light">Trouver une infirmière</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                            </div>
+
+                            <div class="btn_up">
+                              <img src="img/retour-en-haut.png" class="img-responsive" id="returnOnTop">
+                            </div>
+                            <!--Footer-->
+                            <footer class="">
+
+                                <div class="footer-info-area">
+                                    <div class="container text-center alchem_footer_social_icon_1"> 
+                                        <!-- <ul class="footer-sns"><li><a rel="" href="http://localhost/wordpress/#" data-placemeynt="top" data-toggle="tooltip" title="" data-original-title="Facebook"><i class="fa fa-facebook"></i></a></li><li><a rel="" href="http://localhost/wordpress/#" data-placement="top" data-toggle="tooltip" title="" data-original-title="Twitter"><i class="fa fa-twitter"></i></a></li><li><a rel="" href="http://localhost/wordpress/#" data-placement="top" data-toggle="tooltip" title="" data-original-title="YouTube"><i class="fa fa-youtube"></i></a></li><li><a rel="" href="http://localhost/wordpress/#" data-placement="top" data-toggle="tooltip" title="" data-original-title="Skype"><i class="fa fa-skype"></i></a></li><li><a rel="" href="http://localhost/wordpress/#" data-placement="top" data-toggle="tooltip" title="" data-original-title="Pinterest"><i class="fa fa-pinterest"></i></a></li><li><a rel="" href="http://localhost/wordpress/#" data-placement="top" data-toggle="tooltip" title="" data-original-title="Email"><i class="fa fa-envelope"></i></a></li></ul>                    <div class="clearfix"></div>
+                                        -->
+                                        <div class="site-info">
+                                            <a href="#">OUSOFT SAS</a>. 38 Rue de la convention, 94270, Le Kremlin-Bicêtre.</div>
+                                    </div>
+                                </div>          
+                            </footer>
+                        </div>  
+                        <script type="text/javascript" src="bootstrap/js/jquery.js"></script>
+                        <script type="text/javascript" src="./others/owl.carousel.min.js.téléchargement"></script>
+                        <script type="text/javascript">
+                                    /* <![CDATA[ */
+                                    var alchem_params = {"ajaxurl": "http:\/\/localhost\/wordpress\/wp-admin\/admin-ajax.php", "themeurl": "http:\/\/localhost\/wordpress\/wp-content\/themes\/alchem", "responsive": "yes", "site_width": "1170px", "sticky_header": "yes", "show_search_icon": "yes", "slider_autoplay": "yes", "slideshow_speed": "3000", "portfolio_grid_pagination_type": "pagination", "blog_pagination_type": "pagination", "global_color": "#fdd200", "admin_ajax_nonce": "2ed3a22947", "admin_ajax": "http:\/\/localhost\/wordpress\/wp-admin\/admin-ajax.php", "isMobile": "0", "footer_sticky": "0"};
+                                    /* ]]> */
+                        </script>
+                        <script type="text/javascript" src="./others/main.js.téléchargement"></script>
+                            <script type="text/javascript">
+                              $(document).ready( function () 
+                              {
+                                $('#returnOnTop').hide();
+                                $('#returnOnTop').click( function() {
+                                    //e.preventDefault();
+                                    $('html,body').animate({scrollTop: 0}, 'slow');
+                                });
+                              });
+
+                              $(window).scroll(function() 
+                              {
+                                  if ( $(window).scrollTop() == 0 )
+                                      $('#returnOnTop').fadeOut();
+                                  else
+                                      $('#returnOnTop').fadeIn();
+                              });
+                            </script>
+                        </body>
+                        </html>

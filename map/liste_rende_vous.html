@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="./map/css/paper.css">
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/map/js/jquery-1.10.2.min.js"></script>
+    </head>
+    <body>
+        <div id="container">
+            <div id="content-header">
+                <center><h3>Liste de demande</h3></center>  
+            </div>
+            <div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nom et Prenom du patient</th>
+                            <th>Type de soins</th>
+                            <th>Heure de soin</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="content">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <button class="btn btn-primary hidden btn-lg" id="triggerwarning" data-toggle="modal" data-target="#loginerror"></button>
+        <div class="modal" id="loginerror">
+            <div class="modal-dialog">
+                <div class="modal-content alert alert-dismissible alert-info col-lg-12">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="ferme">&times;</button>
+                        <h4 class="modal-title" style="text-align: center;">Information !</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="warning" id="erreur"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+	<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            var socket = io();
+            var liste = [];
+            var items = [];
+            $('document').ready(function () {
+                socket.on('connected', function (data) {
+
+                    socket.emit('rendez_vous_de', 'Un test de dfklfdlfd');
+                    socket.on('vider', function () {
+                        $("#content").html('');      //vider 
+                    });
+
+                    socket.on('liste_user', function (user) {
+                        //alert("On appelle liste_user");
+                        liste = [];
+                        liste[user.email] = user;
+                        //boucle 
+                        for (var key in liste) {
+                            var p = "<tr id=\"" + liste[user.email].emailP + "\"><td>" + liste[user.email].nomP + " " + liste[user.email].prenomP + "</td>";
+                            p += "<td>" + liste[user.email].typeSoinP + "</td>";
+                            p += "<td>" + liste[user.email].date + "</td>";
+                            p += "<td><button onclick='accepter($(this).parent().parent());' type=\"button\" class=\"btn btn-success\">Accepter</button><button onclick='refuser($(this).parent().parent());' type=\"button\" class=\"btn btn-danger\">Refuser</button></td>";
+                            p += "</tr>";
+                            $("#content").append(p);    //inserer
+                            //  alert(liste[user.email].commentaire);
+                            //  alert(p);
+                        }
+                    });
+                });
+            });
+
+            function accepter(content) {
+                var email = content.attr('id');
+                socket.emit('accept', email);
+                //alert("Demande accepter!");
+            }
+            function refuser(content) {
+                var email = content.attr('id');
+                socket.emit('refus', email);
+                //alert("Demande refuser ! ");
+            }
+
+
+
+        </script>
+        <script type="text/javascript">
+            var map;
+            var itemsRendeVous = [];
+
+            var rendeVous = [];
+
+
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: 49.037, lng: 14.974},
+                    zoom: 18
+                });
+            }
+
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition, hidePosition);
+                } else {
+                    alert("Geolocation is not supported by this browser. Now we trying to get your location through your IP address.");
+                    ipPosition();
+                }
+            }
+
+            //Recuperation de la position de l'utilisateur
+            function showPosition(position) {
+                pos = {
+                    lat: parseFloat(position.coords.latitude),
+                    lng: parseFloat(position.coords.longitude)
+                };
+                map.panTo(pos);
+                var marker = new google.maps.Marker({
+                    position: pos,
+                    map: map,
+                    animation: google.maps.Animation.BOUNCE
+                });
+
+                marker.setIcon("http://maps.google.com/mapfiles/ms/icons/blue-dot.png");
+
+            }
+
+            function hidePosition(position) {
+                alert('User denied the access of the position. Now we trying to get your location through your IP address.');
+                ipPosition();
+            }
+
+            function ipPosition() {
+                $.get("http://ipinfo.io", function (response) {
+                    var loc = response.loc.split(',');
+                    pos = {
+                        lat: parseFloat(loc[0]),
+                        lng: parseFloat(loc[1])
+                    };
+                }, "jsonp");
+            }
+
+            getLocation();
+
+            var markers = [];
+
+            function addMarker(location, user) { // Adds a marker to the map and push to the array.
+                var markerId = user.email; // that will be used to cache this marker in markers object.
+                var image = "http://maps.google.com/mapfiles/ms/icons/green-dot.png";
+                var marker;
+
+                if (markers.hasOwnProperty(user.email)) {
+                    removeMarker(marker, user.email);
+                    alert("Suppression marker ! ");
+                }
+
+
+
+                marker = new google.maps.Marker({
+                    position: location,
+                    map: map,
+                    id: markerId,
+                    icon: image
+                });
+
+                var p = "<div class='content'>";
+                p += "<center><h4>" + user.prenom + " " + user.nom + "</h4></center>";
+                p += "<div class='col-lg-12'>";
+                p += "<p><strong>Téléphone : </strong>" + user.tel + "</p>";
+                p += "<p><strong>Email : </strong>" + user.email + "</p>";
+                p += "</div>";
+                p += "</div>";
+
+                var contentString = p;
+
+                var info = new google.maps.InfoWindow({
+                    content: contentString
+                });
+                marker.addListener('click', function () {
+                    info.open(map, marker);
+                });
+
+                markers[markerId] = marker;
+            }
+
+            var removeMarker = function (marker, markerId) {
+                marker.setMap(null); // set markers setMap to null to remove it from map
+                delete markers[markerId]; // delete marker instance from markers object
+            };
+
+            //  var socket = io();
+
+            //Recuperer le contenue du fichier
+            socket.emit('data_infirmier', "Lire fichier");
+            socket.on('data_infirmier', function (data) {
+                user = data;
+                user.type = "infirmier";
+            });
+
+
+            check_pos = setInterval(function () { //create a loop and wait for the response
+                if (typeof pos != 'undefined') { //while the position is not defined the loop is checking every half seconds
+                    user.pos = pos;
+                    socket.emit('new_user', user);
+
+                    clearInterval(check_pos);
+                }
+            }, 500);
+
+
+            socket.on('already', function (data) {
+                $.each(data.visitors, function (key, usr) {
+                    if (usr.type == "patient")
+                        addMarker(usr.pos, usr);
+
+                });
+            });
+
+
+            socket.on('connected', function (data) {
+                if (data.user.type == "patient")
+                    addMarker(data.user.pos, data.user);
+            });
+
+            socket.on('rendez-vous', function (data) {
+                var index = 0;
+                rendeVous[data.user.email] = data.user;
+                socket.emit('ajout_liste', data.user);
+                for (var key in rendeVous) {
+                  //  alert("Un patient vient de vous envoyez une demande ! ");
+                    $('#erreur').html('<p> Un patient vient de vous envoyez une demande !</p>');
+                    $('#triggerwarning').trigger('click');
+                }
+                //alert(Object.keys(rendeVous).length);
+
+            });
+
+
+            //Deconnexion de l'utilisateur
+            socket.on('deconnecter', function (email) {
+                var markerId = email;
+                var marker = markers[markerId];
+                removeMarker(marker, markerId);
+                //     alert("Deconnexion ! ");
+            });
+
+        </script>
+    </body>
+
+</html>
