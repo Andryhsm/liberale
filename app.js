@@ -186,7 +186,7 @@ io.on('connection', function (socket) {
 });
 
 function lister(socket) {
-    connection.query('SELECT * FROM liste_demande WHERE emailI="' + p_email + '" and status="attente"', function (err, result, fields) {
+    connection.query('SELECT * FROM liste_demande WHERE emailI="' + p_email + '" and status="attente" ORDER BY id DESC', function (err, result, fields) {
         if (err) {
             throw err;
         } else {

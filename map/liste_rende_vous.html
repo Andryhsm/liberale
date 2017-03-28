@@ -9,20 +9,12 @@
         <script src="/map/js/jquery-1.10.2.min.js"></script>
     </head>
     <body>
-        <div id="container">
+        <div class="container" id="container">
             <div id="content-header">
                 <center><h3>Liste de demande</h3></center>  
             </div>
             <div>
                 <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Nom et Prenom du patient</th>
-                            <th>Type de soins</th>
-                            <th>Heure de soin</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
                     <tbody id="content">
                     </tbody>
                 </table>
@@ -63,14 +55,17 @@
                         liste[user.email] = user;
                         //boucle 
                         for (var key in liste) {
-                            var p = "<tr id=\"" + liste[user.email].emailP + "\"><td>" + liste[user.email].nomP + " " + liste[user.email].prenomP + "</td>";
-                            p += "<td>" + liste[user.email].typeSoinP + "</td>";
-                            p += "<td>" + liste[user.email].date + "</td>";
-                            p += "<td><button onclick='accepter($(this).parent().parent());' type=\"button\" class=\"btn btn-success\">Accepter</button><button onclick='refuser($(this).parent().parent());' type=\"button\" class=\"btn btn-danger\">Refuser</button></td>";
+                            var p = "<tr id=\"" + liste[user.email].emailP + "\">";
+                            p += "<td width='40%'><div><h4>" + liste[user.email].nomP + " " + liste[user.email].prenomP + "</h4></div>";
+                            p += "<div>Type de soin: " + liste[user.email].typeSoinP + "</div>";
+                            p += "<div>Fréquence de soin: " + liste[user.email].frequenceSoinP + "</div>";
+                            p += "<div>Heure de soin: " + liste[user.email].heureSoinP + "</div>";
+                            p += "<div>Email: " + liste[user.email].emailP + "&nbsp;&nbsp;&nbsp;&nbsp;";
+                            p += "Tel: " + liste[user.email].telP + "</div>";
+                            p += "<button onclick='accepter($(this).parent().parent());' type=\"button\" class=\"btn btn-success\">Accepter</button>&nbsp;&nbsp;&nbsp;&nbsp;<button onclick='refuser($(this).parent().parent());' type=\"button\" class=\"btn btn-danger\">Refuser</button></td>";
+                            p += "<td><br><br>" + liste[user.email].commentaire + "</td>";
                             p += "</tr>";
-                            $("#content").append(p);    //inserer
-                            //  alert(liste[user.email].commentaire);
-                            //  alert(p);
+                            $("#content").append(p);
                         }
                     });
                 });
