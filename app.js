@@ -51,7 +51,7 @@ var connection = mysql.createConnection({
 
 
 io.on('connection', function (socket) {
-    
+
     socket.emit('connecter', "Vous êtes maintenant connecter ! ");
 
     socket.on('new_user', function (data) {
@@ -64,23 +64,23 @@ io.on('connection', function (socket) {
         socket.user = data;                                         //Notre session         
         io.emit('connected', {user: data, users_count: Object.keys(visitors).length});
     });
-    
+
     //Lire le fichier json
     socket.on('data_patient', function (data) {
         contenu = fs.readFileSync(__dirname + '/map/map/data_patient.json');
         fs.writeFileSync(__dirname + '/map/map/data_patient.json', '', 'UTF-8');		//Vider le fichier json
-        if(contenu != null)
+        if (contenu != null)
             socket.emit('data_patient', JSON.parse(contenu));
         else
-             console.log("ERREUR : le contenue du fichier est null ! ");
+            console.log("ERREUR : le contenue du fichier est null ! ");
     });
 
     socket.on('data_infirmier', function (data) {
         contenu = fs.readFileSync(__dirname + '/map/map/data_infirmier.json');
         fs.writeFileSync(__dirname + '/map/map/data_infirmier.json', '', 'UTF-8');		//Vider le fichier json
-        if(contenu != null)
+        if (contenu != null)
             socket.emit('data_infirmier', JSON.parse(contenu));
-        else 
+        else
             console.log("ERREUR : le contenue du fichier est null ! ");
     });
 
@@ -102,12 +102,12 @@ io.on('connection', function (socket) {
 
     //Recevoir un rendez vous
     socket.on('rendez-vous', function (data) {
-        if(typeof(data.commentaire) != "undefined"){
+        if (typeof (data.commentaire) != "undefined") {
             socket.user.commentaire = data.commentaire;
             console.log(data.commentaire);
         }
         sockets[data.email].emit('rendez-vous', {user: socket.user});
-        lister(socket);             
+        lister(socket);
     });
 
 
@@ -115,11 +115,11 @@ io.on('connection', function (socket) {
     socket.on('ajout_liste', function (data) {
         liste[data.email] = data;
         sockets[socket.email].liste = liste;
-        
-        var typesoin = data.typesoin1 +" - "+ data.typesoin2 +" - "+ data.typesoin3 +" - "+ data.typesoin4;
-        var heure = data.heure1 +" - "+ data.heure2 +" - "+ data.heure3 +" - "+ data.heure4;
 
-        connection.query('INSERT INTO liste_demande (emailI, nomP, prenomP, telP, typeSoinP, commentaire, date, status, emailP) VALUES ("' + socket.email + '", "' + data.nom + '", "' + data.prenom + '", "' + data.tel + '", "' + typesoin + '", "'+data.commentaire+'", "' + data.heure1 + '", "attente", "' + data.email + '")', function (err, result, fields) {
+        var typesoin = data.typesoin1 + " - " + data.typesoin2 + " - " + data.typesoin3 + " - " + data.typesoin4;
+        var heure = data.heure1 + " - " + data.heure2 + " - " + data.heure3 + " - " + data.heure4;
+
+        connection.query('INSERT INTO liste_demande (emailI, nomP, prenomP, telP, typeSoinP, commentaire, date, status, emailP) VALUES ("' + socket.email + '", "' + data.nom + '", "' + data.prenom + '", "' + data.tel + '", "' + typesoin + '", "' + data.commentaire + '", "' + data.heure1 + '", "attente", "' + data.email + '")', function (err, result, fields) {
             if (err)
                 throw err;
             else
@@ -134,21 +134,21 @@ io.on('connection', function (socket) {
     //Pour la requete GET du page 
     socket.on('rendez_vous_de', function (email) {
         if (typeof (p_email) != "undefined") {
-            
+
             //On recupere tous les listes dans la base de données
             console.log(p_email + " a demander un liste de rendez-vous ! ");
-            
+
             lister(socket);
-            
+
 
             //Lorsque la demande est accepter ou refuser
             socket.on('accept', function (email) {
-                console.log("La demande de "+ email +" est accepter ! ");
-                
+                console.log("La demande de " + email + " est accepter ! ");
+
                 if (typeof (sockets[email]) != "undefined")
                     sockets[email].emit('dmd_accepter', "votre demande vient d'être accepter ! ");
 
-                
+
                 connection.query('UPDATE liste_demande SET status="accepter" WHERE emailP="' + email + '" AND emailI="' + p_email + '"', function (err, result, fields) {
                     if (err)
                         throw err;
@@ -156,14 +156,14 @@ io.on('connection', function (socket) {
                         lister(socket);
                     }
                 });
-                
+
                 //Ouvrir une discussion
-            
+
             });
 
 
             socket.on('refus', function (email) {
-                console.log("La demande "+ email +" vient d'être refuser ! ");
+                console.log("La demande " + email + " vient d'être refuser ! ");
 
                 if (typeof (sockets[email]) != "undefined")
                     sockets[email].emit('dmd_refus', "votre demande vient d'être refuser ! ");
@@ -201,7 +201,7 @@ function lister(socket) {
                     socket.emit('liste_user', listeUser[key]);
                 }
             } else {
-                console.log("La liste est encore vide :  " + p_email);  
+                console.log("La liste est encore vide :  " + p_email);
             }
         }
     });
