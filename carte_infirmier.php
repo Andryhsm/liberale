@@ -159,7 +159,7 @@ fclose($fichier);
                
 
                 <section class="section magee-section alchem-home-section-4 alchem-home-style-0" id="section-5" style="padding:0%;">
-                    <iframe src="http://192.168.1.47:3000/infirmier" style="width:100vw; height: 100vh;">
+                    <iframe src="http://192.168.1.46:3000/infirmier" style="width:100vw; height: 100vh;">
                     </iframe>
                 </section>
 
