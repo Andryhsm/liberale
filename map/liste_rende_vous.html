@@ -41,6 +41,8 @@
             var socket = io();
             var liste = [];
             var items = [];
+            var pos = {};
+            
             $('document').ready(function () {
                 socket.on('connected', function (data) {
 
@@ -58,8 +60,8 @@
                             var p = "<tr id=\"" + liste[user.email].emailP + "\">";
                             p += "<td width='50%'><div><h4>" + liste[user.email].nomP + " " + liste[user.email].prenomP + "</h4></div>";
                             p += "<div>Type de soin: " + liste[user.email].typeSoinP + "</div>";
-                            p += "<div>Fréquence de soin: " + liste[user.email].frequenceSoinP + "</div>";
-                            p += "<div>Heure de soin: " + liste[user.email].heureSoinP + "</div>";
+                            p += "<div>Fréquence de soin: " + liste[user.email].frequenceSoin + "</div>";
+                            p += "<div>Heure de soin: " + liste[user.email].date + "</div>";
                             p += "<div>Email: " + liste[user.email].emailP + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                             p += "Tel: " + liste[user.email].telP + "</div>";
                             p += "</td>";
@@ -139,7 +141,7 @@
                     };
                 }, "jsonp");
             }
-
+            
             getLocation();
 
             var markers = [];

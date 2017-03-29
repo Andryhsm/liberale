@@ -9,17 +9,23 @@
         <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <div class="container">
-            <div class="container" id="container">
-                <div id="content-header">
-                    <center><h3>Mon carnet de rendez-vous</h3></center>  
-                </div>
-                <div>
-                    <table class="table table-hover">
-                        <tbody id="content">
-                        </tbody>
-                    </table>
-                </div>
+         <div id="container">
+            <div id="content-header">
+                <center><h3>Mon rendez-vous</h3></center>  
+            </div>
+            <div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nom et Prenom du patient</th>
+                            <th>Type de soins</th>
+                            <th>Heure de soin</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="content">
+                    </tbody>
+                </table>
             </div>
         </div>
         <button class="btn btn-primary hidden btn-lg" id="triggerwarning" data-toggle="modal" data-target="#loginerror"></button>
@@ -40,17 +46,30 @@
         </div>
         <script type="text/javascript">
             var socket = io();
+            var liste = [];
+            var items = [];
             socket.on("connecter", function () {
-                
                 socket.emit("carnet", "Les carnets");
-                socket.on("carnet", function(data){
-                    alert("Une test de demande ! ");
+                socket.on("carnet", function (data) {
                     socket.on('vider', function () {
                         //$("#content").html('');      //vider 
                         alert("vider le champ ! ");
                     });
-                    socket.on("liste_rdv", function(data){
-                       alert("data bien reçus ! "); 
+                    socket.on("liste_rdv", function (user) {
+                        //alert("On appelle liste_user");
+                        liste = [];
+                        liste[user.email] = user;
+                        //boucle 
+                        for (var key in liste) {
+                            var p = "<tr id=\"" + liste[user.email].emailP + "\"><td>" + liste[user.email].nomP + " " + liste[user.email].prenomP + "</td>";
+                            p += "<td>" + liste[user.email].typeSoinP + "</td>";
+                            p += "<td>" + liste[user.email].date + "</td>";
+                            p += "<td><button onclick='accepter($(this).parent().parent());' type=\"button\" class=\"btn btn-info\">Voir itinéraire</button>&nbsp;&nbsp;&nbsp;&nbsp;<button onclick='refuser($(this).parent().parent());' type=\"button\" class=\"btn btn-default\">Terminer</button></td>";
+                            p += "</tr>";
+                            $("#content").append(p);    //inserer
+                            //  alert(liste[user.email].commentaire);
+                            //  alert(p);
+                        }
                     });
                 });
             });

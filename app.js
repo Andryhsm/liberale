@@ -41,7 +41,7 @@ app.get('/carnet', function (req, res) {
 
 var visitors = {};
 var sockets = {};
-var liste = [], liste_rdv = [];
+var liste = [], liste_rdv = [], liste_dmd_accpter = [];
 
 
 
@@ -115,7 +115,6 @@ io.on('connection', function (socket) {
 
         if (typeof (data.commentaire) != "undefined") {
             socket.user.commentaire = data.commentaire;
-            console.log(data.commentaire);
         }
         sockets[data.email].emit('rendez-vous', {user: socket.user});
         lister(socket);
@@ -137,8 +136,9 @@ io.on('connection', function (socket) {
 
             var typesoin = data.typesoin1 + " - " + data.typesoin2 + " - " + data.typesoin3 + " - " + data.typesoin4;
             var heure = data.heure1 + " - " + data.heure2 + " - " + data.heure3 + " - " + data.heure4;
+            var frequencesoin = data.frequence_soin1 + " - " + data.frequence_soin2 + " - " + data.frequence_soin3 + " - " + data.frequence_soin4 + " - ";
 
-            connection.query('INSERT INTO liste_demande (emailI, nomP, prenomP, telP, typeSoinP, commentaire, date, status, emailP) VALUES ("' + socket.email + '", "' + data.nom + '", "' + data.prenom + '", "' + data.tel + '", "' + typesoin + '", "' + data.commentaire + '", "' + data.heure1 + '", "attente", "' + data.email + '")', function (err, result, fields) {
+            connection.query('INSERT INTO liste_demande (emailI, nomP, prenomP, telP, typeSoinP, commentaire, date,frequenceSoin, status, emailP) VALUES ("' + socket.email + '", "' + data.nom + '", "' + data.prenom + '", "' + data.tel + '", "' + typesoin + '", "' + data.commentaire + '", "' + heure + '","' + frequencesoin + '", "attente", "' + data.email + '")', function (err, result, fields) {
                 if (err)
                     throw err;
                 else
@@ -203,12 +203,13 @@ io.on('connection', function (socket) {
     });
 
 
-    /*
-     //LES RENDEZ VOUS
-     socket.on("carnet", function (data) {
-     console.log("Demande de carnet d'adresse ! ");
-     lister_rendez_vous(socket);
-     });*/
+  
+  
+    //Carnet de rendez-vous
+   socket.on('carnet', function(){
+       socket.emit('carnet', "Carnet d'addresse ! ");
+        lister_rendez_vous(socket);
+   });
 });
 
 
@@ -235,35 +236,26 @@ function lister(socket) {
         }
     });
 }
-/*
- function lister_rendez_vous(socket) {
- connection.query('SELECT * FROM liste_demande WHERE emailI="' + p_email + '" and status="accepter" ORDER BY id DESC', function (err, result, fields) {
- if (err) {
- console.log("ERREUR:  Un erreur de recuperation ! ");
- } else {
- if (typeof sockets[p_email2] != "undefined") {
- console.log(" On doit continuer ! ");
- sockets[p_email2].liste_rdv = result;
- var listeUser = sockets[p_email2].liste_rdv;                 //Contient les listes des utilisateurs qui commande
- 
- //Lister les demandes
- if (typeof (listeUser) != "undefined") {
- console.log("MYSQL: recuperation de base ok ! ");
- socket.emit('vider', "Vider le champt");
- for (var key in listeUser) {
- socket.emit('liste_rdv', listeUser[key]);
- liste_rdv[listeUser[key].emailP] = listeUser[key];
- }
- console.log("INFO: nombre connecter : "+ Object.keys(sockets).length);
- } else {
- console.log("INFO : La liste est encore vide :  " + p_email2);
- }
- }else{
- console.log("ERREUR : Le sockets "+p_email2+" n'est pas definit ! ");
- console.log("INFO: nombre connecter : "+ Object.keys(sockets).length);
- }
- 
- }
- });
- }
- */
+
+function lister_rendez_vous(socket) {
+    connection.query('SELECT * FROM liste_demande WHERE emailI="' + p_email2 + '" and status="accepter" ORDER BY id DESC', function (err, result, fields) {
+        if (err) {
+            throw err;
+        } else {
+            if (typeof (sockets[p_email2]) != "undefined") {
+                sockets[p_email2].liste = result;
+                var listeUser = sockets[p_email2].liste;                 //Contient les listes des utilisateurs qui commande
+            }
+            //Lister les rendez-vous en envoyant une a une
+            if (typeof (listeUser) != "undefined") {
+                socket.emit('vider', "Vider le champt");
+                for (var key in listeUser) {
+                    socket.emit('liste_rdv', listeUser[key]);
+                    liste[listeUser[key].emailP] = listeUser[key];
+                }
+            } else {
+                console.log("La liste est encore vide :  " + p_email);
+            }
+        }
+    });
+}
