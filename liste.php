@@ -117,7 +117,7 @@ fclose($fichier);
                             </button>
                             <nav class="site-nav" role="navigation" style="">
                                 <ul id="menu-main" class="main-nav">
-                                    <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="./liste.php"><span class="menu-item-label">Liste</span></a></li>
+                                    <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="./rendez-vous.php"><span class="menu-item-label">Ma rendez-vous</span></a></li>
                                     <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="./lib-php/renouvellement.php"><span class="menu-item-label">Commander matériel</span></a></li>
                                     <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="./lib-php/modifierprofil_inf.php"><span class="menu-item-label">Modifier mon profil</span></a></li>
                                     <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="./contact2.html"><span class="menu-item-label">Contact</span></a></li>
@@ -141,7 +141,7 @@ fclose($fichier);
                             </button>
                             <nav class="site-nav" role="navigation" style="">
                                 <ul id="menu-main1" class="main-nav">
-                                    <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="./liste.php"><span class="menu-item-label">Liste</span></a></li>
+                                    <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="./rendez-vous.php"><span class="menu-item-label">Mon rendez-vous</span></a></li>
                                     <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="./lib-php/renouvellement.php"><span class="menu-item-label">Commander matériel</span></a></li>
                                     <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="./lib-php/modifierprofil_inf.php"><span class="menu-item-label">Modifier mon profil</span></a></li>
                                     <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="./contact2.html"><span class="menu-item-label">Contact</span></a></li>
@@ -156,7 +156,7 @@ fclose($fichier);
             <div id="alchem-home-sections">
                 
                 <section class="section magee-section alchem-home-section-4 alchem-home-style-0" id="section-5">
-                    <iframe src="<?php echo "http://192.168.1.46:3000/rendez-vous?email=".$_SESSION['email']; ?>" style="width:100vw; height: 100vh;">
+                    <iframe src="<?php echo "http://192.168.1.47:3000/rendez-vous?email=".$_SESSION['email']; ?>" style="width:100vw; height: 100vh;">
                     </iframe>
                 </section>
             </div>
@@ -166,16 +166,13 @@ fclose($fichier);
                       <img src="img/retour-en-haut.png" class="img-responsive" id="returnOnTop">
                     </div>
 
-
             <!--Footer-->
             <footer class="">
-
                 <div class="footer-info-area">
                     <div class="container text-center alchem_footer_social_icon_1"> 
-                        <!-- <ul class="footer-sns"><li><a  rel="" href="http://localhost/wordpress/#" data-placemeynt="top" data-toggle="tooltip" title="" data-original-title="Facebook"><i class="fa fa-facebook"></i></a></li><li><a  rel="" href="http://localhost/wordpress/#" data-placement="top" data-toggle="tooltip" title="" data-original-title="Twitter"><i class="fa fa-twitter"></i></a></li><li><a  rel="" href="http://localhost/wordpress/#" data-placement="top" data-toggle="tooltip" title="" data-original-title="YouTube"><i class="fa fa-youtube"></i></a></li><li><a  rel="" href="http://localhost/wordpress/#" data-placement="top" data-toggle="tooltip" title="" data-original-title="Skype"><i class="fa fa-skype"></i></a></li><li><a  rel="" href="http://localhost/wordpress/#" data-placement="top" data-toggle="tooltip" title="" data-original-title="Pinterest"><i class="fa fa-pinterest"></i></a></li><li><a  rel="" href="http://localhost/wordpress/#" data-placement="top" data-toggle="tooltip" title="" data-original-title="Email"><i class="fa fa-envelope"></i></a></li></ul>                    <div class="clearfix"></div>
-                        -->
+                        <div class="clearfix"></div>
                         <div class="site-info">
-                            <a href="#" >OUSOFT SAS</a>. 38 Rue de la convention, 94270, Le Kremlin-Bicêtre.</div>
+                        <a href="#" >OUSOFT SAS</a>. 38 Rue de la convention, 94270, Le Kremlin-Bicêtre.</div>
                     </div>
                 </div>          
             </footer>

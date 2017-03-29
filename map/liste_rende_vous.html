@@ -56,14 +56,14 @@
                         //boucle 
                         for (var key in liste) {
                             var p = "<tr id=\"" + liste[user.email].emailP + "\">";
-                            p += "<td width='40%'><div><h4>" + liste[user.email].nomP + " " + liste[user.email].prenomP + "</h4></div>";
+                            p += "<td width='50%'><div><h4>" + liste[user.email].nomP + " " + liste[user.email].prenomP + "</h4></div>";
                             p += "<div>Type de soin: " + liste[user.email].typeSoinP + "</div>";
                             p += "<div>Fréquence de soin: " + liste[user.email].frequenceSoinP + "</div>";
                             p += "<div>Heure de soin: " + liste[user.email].heureSoinP + "</div>";
-                            p += "<div>Email: " + liste[user.email].emailP + "&nbsp;&nbsp;&nbsp;&nbsp;";
+                            p += "<div>Email: " + liste[user.email].emailP + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                             p += "Tel: " + liste[user.email].telP + "</div>";
-                            p += "<button onclick='accepter($(this).parent().parent());' type=\"button\" class=\"btn btn-success\">Accepter</button>&nbsp;&nbsp;&nbsp;&nbsp;<button onclick='refuser($(this).parent().parent());' type=\"button\" class=\"btn btn-danger\">Refuser</button></td>";
-                            p += "<td><br><br>" + liste[user.email].commentaire + "</td>";
+                            p += "</td>";
+                            p += "<td><br><i>" + liste[user.email].commentaire + "</i><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick='accepter($(this).parent().parent());' type=\"button\" class=\"btn btn-success\">Accepter</button>&nbsp;&nbsp;&nbsp;&nbsp;<button onclick='refuser($(this).parent().parent());' type=\"button\" class=\"btn btn-danger\">Refuser</button></td>";
                             p += "</tr>";
                             $("#content").append(p);
                         }
@@ -227,12 +227,17 @@
                 rendeVous[data.user.email] = data.user;
                 socket.emit('ajout_liste', data.user);
                 for (var key in rendeVous) {
-                  //  alert("Un patient vient de vous envoyez une demande ! ");
-                    $('#erreur').html('<p> Un patient vient de vous envoyez une demande !</p>');
+            /*        $('#erreur').html('<p> Un patient vient de vous envoyez une demande !</p>');
                     $('#triggerwarning').trigger('click');
-                }
+              */ 
+              	 }
                 //alert(Object.keys(rendeVous).length);
 
+            });
+
+            socket.on('info_dmd_inf', function (data) {
+                $('#erreur').html('<p> ' + data + '</p>');
+                $('#triggerwarning').trigger('click');
             });
 
 
@@ -248,3 +253,4 @@
     </body>
 
 </html>
+    

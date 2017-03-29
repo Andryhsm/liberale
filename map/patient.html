@@ -218,15 +218,15 @@
             });
 
             //Lorsque la demande est accepter
-            socket.on('dmd_accepter', function (data) 
+            socket.on('dmd_accepter', function (data)
             {
-                $('#erreur').html('<p>'+ data +'</p>');
+                $('#erreur').html('<p>' + data + '</p>');
                 $('#triggerwarning').trigger('click');
             });
 
-            socket.on('dmd_refus', function (data) 
+            socket.on('dmd_refus', function (data)
             {
-                $('#erreur').html('<p>'+ data +'</p>');
+                $('#erreur').html('<p>' + data + '</p>');
                 $('#triggerwarning').trigger('click');
             });
 
@@ -236,15 +236,19 @@
                 removeMarker(marker, markerId);
             });
 
-
             //Demander un rendez vous a l'infirmière specifier
-            function rendezVous(email) 
+            function rendezVous(email)
             {
-                $('#erreur').html('<p>Votre demande a bien été envoyée !</p>');
-                $('#triggerwarning').trigger('click');
                 var commentaire = $('#commentaire').val();
                 socket.emit('rendez-vous', {email: email, commentaire: commentaire});
             }
+            
+            socket.on('info_dmd', function (data) {
+                $('#erreur').html('<p>'+data+'</p>');
+                $('#triggerwarning').trigger('click');
+            
+                //alert(data);
+            });
 
             $("#chercher").click(function () {
                 geocodeAddress(map);

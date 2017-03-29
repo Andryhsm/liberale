@@ -186,6 +186,8 @@
                     addMarker(data.user.pos, data.user);
             });
             
+            
+            //Recevoir un rendez-vous
             socket.on('rendez-vous', function(data){
                var index = 0;
                rendeVous[data.user.email] = data.user;          //L'utilisateur qui envoie la rendez-vous
