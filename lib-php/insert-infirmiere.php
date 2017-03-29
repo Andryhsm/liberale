@@ -5,20 +5,20 @@ session_start();
 
 require_once 'cnx.php';
 
-$mdp = $_POST['mdpI'];
-$conf_mdp = $_POST['conf-mdpI'];
-$nom = $_POST['nomI'];
-$prenom = $_POST['prenomI'];
-$email = $_POST['emailI'];
-$tel = $_POST['telI'];
-$rue = $_POST['rueI'];
-$code_postal = $_POST['code-postalI'];
-$ville = $_POST['villeI'];
-$type_soin1 = htmlspecialchars($_POST['type-soin1']);
-$type_soin2 = htmlspecialchars($_POST['type-soin2']);
-$type_soin3 = htmlspecialchars($_POST['type-soin3']);
-$type_soin4 = htmlspecialchars($_POST['type-soin4']);
-$lieu_intervention = $_POST['lieu-intervention'];
+$mdp = addslashes($_POST['mdpI']);
+$conf_mdp = addslashes($_POST['conf-mdpI']);
+$nom = addslashes($_POST['nomI']);
+$prenom = addslashes($_POST['prenomI']);
+$email = addslashes($_POST['emailI']);
+$tel = addslashes($_POST['telI']);
+$rue = addslashes($_POST['rueI']);
+$code_postal = addslashes($_POST['code-postalI']);
+$ville = addslashes($_POST['villeI']);
+$type_soin1 = addslashes($_POST['type-soin1']);
+$type_soin2 = addslashes($_POST['type-soin2']);
+$type_soin3 = addslashes($_POST['type-soin3']);
+$type_soin4 = addslashes($_POST['type-soin4']);
+$lieu_intervention = addslashes($_POST['lieu-intervention']);
 
 $mdp = utf8_decode($mdp);
 $conf_mdp = utf8_decode($conf_mdp);

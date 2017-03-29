@@ -3,34 +3,34 @@
 	require 'connexion.php';
 
 	// déclarations et instantiation des variables a envoyer recu par AJAX
-	$departement = utf8_decode($_POST['departement']);
-	$datelivraison = utf8_decode($_POST['datelivraison']);
-	$heure = utf8_decode($_POST['heure']);
-	$livreur = utf8_decode($_POST['livreur']);
-	$mail = utf8_decode($_POST['mail']);
-	$nom = utf8_decode($_POST['nom']);
-	$prenom = utf8_decode($_POST['prenom']);
-	$adresse = utf8_decode($_POST['adresse']);
-	$adresse2 = utf8_decode($_POST['adresse2']);
-	$mobile = utf8_decode($_POST['mobile']);
-	$fixe = utf8_decode($_POST['fixe']);
-	$commande = utf8_decode($_POST['commande']);
-	$genre = utf8_decode($_POST['genre']);
-	$codepostal = utf8_decode($_POST['codepostal']);
-	$ville = utf8_decode($_POST['ville']);
-	$type_patient = utf8_decode($_POST['type_patient']);
-	$code = utf8_decode($_POST['code']);
+	$departement = utf8_decode(addslashes($_POST['departement']));
+	$datelivraison = utf8_decode(addslashes($_POST['datelivraison']));
+	$heure = utf8_decode(addslashes($_POST['heure']));
+	$livreur = utf8_decode(addslashes($_POST['livreur']));
+	$mail = utf8_decode(addslashes($_POST['mail']));
+	$nom = utf8_decode(addslashes($_POST['nom']));
+	$prenom = utf8_decode(addslashes($_POST['prenom']));
+	$adresse = utf8_decode(addslashes($_POST['adresse']));
+	$adresse2 = utf8_decode(addslashes($_POST['adresse2']));
+	$mobile = utf8_decode(addslashes($_POST['mobile']));
+	$fixe = utf8_decode(addslashes($_POST['fixe']));
+	$commande = utf8_decode(addslashes($_POST['commande']));
+	$genre = utf8_decode(addslashes($_POST['genre']));
+	$codepostal = utf8_decode(addslashes($_POST['codepostal']));
+	$ville = utf8_decode(addslashes($_POST['ville']));
+	$type_patient = utf8_decode(addslashes($_POST['type_patient']));
+	$code = utf8_decode(addslashes($_POST['code']));
 
-	$nomComplet = utf8_decode($_POST['nomComplet']);
-	$contact = utf8_decode($_POST['contact']);
-	$adresseComplet = utf8_decode($_POST['adresseComplet']);
+	$nomComplet = utf8_decode(addslashes($_POST['nomComplet']));
+	$contact = utf8_decode(addslashes($_POST['contact']));
+	$adresseComplet = utf8_decode(addslashes($_POST['adresseComplet']));
 
 
 	$date_insertion = date('Y-m-d');
 
 
 	// déclaration et instanciation des variables a envoyer par mail
-	$message = utf8_decode(nl2br(($_POST['message'])));
+	$message = utf8_decode(nl2br((addslashes($_POST['message']))));
 
 	// sujet du mail
 	$sujet = 'Demande de renouvellement ( '.$nom.' - '.$codepostal.' '.$ville.')';

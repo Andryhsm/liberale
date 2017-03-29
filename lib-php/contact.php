@@ -1,10 +1,10 @@
 <?php
 
-	$nom = utf8_decode($_POST['nom']);
-	$email = utf8_decode($_POST['email']);
-	$sujetContact = utf8_decode($_POST['sujet']);
+	$nom = utf8_decode(addslashes($_POST['nom']));
+	$email = utf8_decode(addslashes($_POST['email']));
+	$sujetContact = utf8_decode(addslashes($_POST['sujet']));
 	$sujet = "Mr/Mme " .$nom. " - ".$sujetContact." .";
-	$messageContact = utf8_decode($_POST['message']);
+	$messageContact = utf8_decode(addslashes($_POST['message']));
 
 	$message = "<html><head><title></title></head><body><p> {$messageContact} <br><br> {$email}</p></body></html>";
 

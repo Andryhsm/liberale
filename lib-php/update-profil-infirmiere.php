@@ -4,21 +4,21 @@
 
     require_once 'cnx.php';
 
-    $id = $_POST['idI'];
-    $mdp = $_POST['mdpI'];
-    $conf_mdp = $_POST['conf-mdpI'];
-    $nom = utf8_decode($_POST['nomI']);
-    $prenom = utf8_decode($_POST['prenomI']);
-    $email = utf8_decode($_POST['emailI']);
-    $tel = $_POST['telI'];
-    $rue = utf8_decode($_POST['rueI'];
-    $code_postal = $_POST['code-postalI']);
-    $ville = utf8_decode($_POST['villeI']);
-    $type_soin1 = utf8_decode(htmlspecialchars($_POST['type-soin1']));
-    $type_soin2 = utf8_decode(htmlspecialchars($_POST['type-soin2']));
-    $type_soin3 = utf8_decode(htmlspecialchars($_POST['type-soin3']));
-    $type_soin4 = utf8_decode(htmlspecialchars($_POST['type-soin4']));
-    $lieu_intervention = utf8_decode($_POST['lieu-intervention']);
+    $id = addslashes($_POST['idI']);
+    $mdp = addslashes($_POST['mdpI']);
+    $conf_mdp = addslashes($_POST['conf-mdpI']);
+    $nom = utf8_decode(addslashes($_POST['nomI']));
+    $prenom = utf8_decode(addslashes($_POST['prenomI']));
+    $email = utf8_decode(addslashes($_POST['emailI']));
+    $tel = addslashes($_POST['telI']);
+    $rue = utf8_decode(addslashes($_POST['rueI']));
+    $code_postal = addslashes($_POST['code-postalI']);
+    $ville = utf8_decode(addslashes($_POST['villeI']));
+    $type_soin1 = utf8_decode(addslashes($_POST['type-soin1']));
+    $type_soin2 = utf8_decode(addslashes($_POST['type-soin2']));
+    $type_soin3 = utf8_decode(addslashes($_POST['type-soin3']));
+    $type_soin4 = utf8_decode(addslashes($_POST['type-soin4']));
+    $lieu_intervention = utf8_decode(addslashes($_POST['lieu-intervention']));
 
     $dossier = '../image-person/';
 
