@@ -112,7 +112,11 @@ io.on('connection', function (socket) {
 
 
     //Recevoir un rendez vous
+<<<<<<< HEAD
     socket.on('rendez-vous', function (data) {      //Infirmier comme parametre
+=======
+    socket.on('rendez-vous', function (data) {
+>>>>>>> 48ad9f8e1db29780fdd9cf535c99a439dd0b390e
         if (typeof (data.commentaire) != "undefined") {
             socket.user.commentaire = data.commentaire;
             console.log(data.commentaire);
@@ -123,6 +127,7 @@ io.on('connection', function (socket) {
 
 
     //Ajout de commande dans la liste
+<<<<<<< HEAD
     socket.on('ajout_liste', function (data) {          //Information du patient
 
         if (liste.hasOwnProperty(data.email)) {
@@ -146,6 +151,22 @@ io.on('connection', function (socket) {
             });
         }
 
+=======
+    socket.on('ajout_liste', function (data) {
+        liste[data.email] = data;
+        sockets[socket.email].liste = liste;
+
+        var typesoin = data.typesoin1 + " - " + data.typesoin2 + " - " + data.typesoin3 + " - " + data.typesoin4;
+        var heure = data.heure1 + " - " + data.heure2 + " - " + data.heure3 + " - " + data.heure4;
+
+        connection.query('INSERT INTO liste_demande (emailI, nomP, prenomP, telP, typeSoinP, commentaire, date, status, emailP) VALUES ("' + socket.email + '", "' + data.nom + '", "' + data.prenom + '", "' + data.tel + '", "' + typesoin + '", "' + data.commentaire + '", "' + data.heure1 + '", "attente", "' + data.email + '")', function (err, result, fields) {
+            if (err)
+                throw err;
+            else
+                console.log(data.nom + " est ajouter dans la base !  ");
+            lister(socket);
+        });
+>>>>>>> 48ad9f8e1db29780fdd9cf535c99a439dd0b390e
     });
 
 
@@ -156,20 +177,34 @@ io.on('connection', function (socket) {
         if (typeof (p_email) != "undefined") {
 
             //On recupere tous les listes dans la base de données
+<<<<<<< HEAD
             //    console.log(p_email + " a demander un liste de rendez-vous ! ");
 
             lister(socket);
             console.log("INFO: reinitialiser liste ");
+=======
+            console.log(p_email + " a demander un liste de rendez-vous ! ");
+
+            lister(socket);
+>>>>>>> 48ad9f8e1db29780fdd9cf535c99a439dd0b390e
 
 
             //Lorsque la demande est accepter ou refuser
             socket.on('accept', function (email) {
+<<<<<<< HEAD
                 console.log("INFO : La demande de " + email + " est accepter ! ");
+=======
+                console.log("La demande de " + email + " est accepter ! ");
+>>>>>>> 48ad9f8e1db29780fdd9cf535c99a439dd0b390e
 
                 if (typeof (sockets[email]) != "undefined")
                     sockets[email].emit('info_dmd', "<strong> " + socket.user.prenom + " " + socket.user.nom + "</strong> a acceptée le rendez-vous du <strong>" + sockets[email].user.heure1 + "</strong> que vous avez proposé !");
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 48ad9f8e1db29780fdd9cf535c99a439dd0b390e
                 connection.query('UPDATE liste_demande SET status="accepter" WHERE emailP="' + email + '" AND emailI="' + p_email + '"', function (err, result, fields) {
                     if (err)
                         throw err;
@@ -184,6 +219,16 @@ io.on('connection', function (socket) {
 
 
             socket.on('refus', function (email) {
+<<<<<<< HEAD
+=======
+                console.log("La demande " + email + " vient d'être refuser ! ");
+
+                if (typeof (sockets[email]) != "undefined")
+                    sockets[email].emit('dmd_refus', "votre demande vient d'être refuser ! ");
+
+                console.log("EmailP : " + email + " emailI : " + p_email);
+
+>>>>>>> 48ad9f8e1db29780fdd9cf535c99a439dd0b390e
                 connection.query('UPDATE liste_demande SET status="refuser" WHERE emailP="' + email + '" AND emailI="' + p_email + '"', function (err, result, fields) {
                     if (err)
                         throw err;
