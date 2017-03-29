@@ -3,8 +3,8 @@
 	
 	require 'cnx.php';
 
-	$email = $_POST['email'];
-	$mdp = $_POST['mdp'];
+	$email = addslashes($_POST['email']);
+	$mdp = addslashes($_POST['mdp']);
 
 	try 
 	{

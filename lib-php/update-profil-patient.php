@@ -2,31 +2,31 @@
 
 require_once 'cnx.php';
 
-$id = $_POST['idP'];
-$mdp = $_POST['mdpP'];
-$conf_mdp = $_POST['conf-mdp'];
-$nom = $_POST['nomP'];
-$prenom = $_POST['prenomP'];
-$email = $_POST['emailP'];
-$tel = $_POST['telP'];
-$rue = $_POST['rueP'];
-$code_postal = $_POST['code-postalP'];
-$ville = $_POST['villeP'];
-$code_acces = $_POST['code-acces'];
-$etage = $_POST['etage'];
-$info_sup = $_POST['info-sup'];
-$type_soin1 = htmlspecialchars($_POST['type-soinP1']);
-$type_soin2 = htmlspecialchars($_POST['type-soinP2']);
-$type_soin3 = htmlspecialchars($_POST['type-soinP3']);
-$type_soin4 = htmlspecialchars($_POST['type-soinP4']);
-$frequence_soin1 = htmlspecialchars($_POST['frequence-soin1']);
-$frequence_soin2 = htmlspecialchars($_POST['frequence-soin2']);
-$frequence_soin3 = htmlspecialchars($_POST['frequence-soin3']);
-$frequence_soin4 = htmlspecialchars($_POST['frequence-soin4']);
-$heure1 = htmlspecialchars($_POST['heure1']);
-$heure2 = htmlspecialchars($_POST['heure2']);
-$heure3 = htmlspecialchars($_POST['heure3']);
-$heure4 = htmlspecialchars($_POST['heure4']);
+$id = addslashes($_POST['idP']);
+$mdp = addslashes($_POST['mdpP']);
+$conf_mdp = addslashes($_POST['conf-mdp']);
+$nom = addslashes($_POST['nomP']);
+$prenom = addslashes($_POST['prenomP']);
+$email = addslashes($_POST['emailP']);
+$tel = addslashes($_POST['telP']);
+$rue = addslashes($_POST['rueP']);
+$code_postal = addslashes($_POST['code-postalP']);
+$ville = addslashes($_POST['villeP']);
+$code_acces = addslashes($_POST['code-acces']);
+$etage = addslashes($_POST['etage']);
+$info_sup = addslashes($_POST['info-sup']);
+$type_soin1 = addslashes($_POST['type-soinP1']);
+$type_soin2 = addslashes($_POST['type-soinP2']);
+$type_soin3 = addslashes($_POST['type-soinP3']);
+$type_soin4 = addslashes($_POST['type-soinP4']);
+$frequence_soin1 = addslashes($_POST['frequence-soin1']);
+$frequence_soin2 = addslashes($_POST['frequence-soin2']);
+$frequence_soin3 = addslashes($_POST['frequence-soin3']);
+$frequence_soin4 = addslashes($_POST['frequence-soin4']);
+$heure1 = addslashes($_POST['heure1']);
+$heure2 = addslashes($_POST['heure2']);
+$heure3 = addslashes($_POST['heure3']);
+$heure4 = addslashes($_POST['heure4']);
 
 $dossier = '../image-person/';
 
