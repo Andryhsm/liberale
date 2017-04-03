@@ -56,14 +56,14 @@
                         //boucle 
                         for (var key in liste) {
                             var p = "<tr id=\"" + liste[user.email].emailP + "\">";
-                            p += "<td width='40%'><div><h4>" + liste[user.email].nomP + " " + liste[user.email].prenomP + "</h4></div>";
+                            p += "<td width='50%'><div><h4>" + liste[user.email].nomP + " " + liste[user.email].prenomP + "</h4></div>";
                             p += "<div>Type de soin: " + liste[user.email].typeSoinP + "</div>";
                             p += "<div>Fréquence de soin: " + liste[user.email].frequenceSoinP + "</div>";
                             p += "<div>Heure de soin: " + liste[user.email].heureSoinP + "</div>";
                             p += "<div>Email: " + liste[user.email].emailP + "&nbsp;&nbsp;&nbsp;&nbsp;";
-                            p += "Tel: " + liste[user.email].telP + "</div>";
+                            p += "Tel: " + liste[user.email].telP + "</div></td>";
+                            p += "<td><br><br>" + liste[user.email].commentaire + "<br><br>";
                             p += "<button onclick='accepter($(this).parent().parent());' type=\"button\" class=\"btn btn-success\">Accepter</button>&nbsp;&nbsp;&nbsp;&nbsp;<button onclick='refuser($(this).parent().parent());' type=\"button\" class=\"btn btn-danger\">Refuser</button></td>";
-                            p += "<td><br><br>" + liste[user.email].commentaire + "</td>";
                             p += "</tr>";
                             $("#content").append(p);
                         }

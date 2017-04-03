@@ -163,7 +163,7 @@ fclose($fichier);
          
 
 
-            <iframe src="http://192.168.5.12:3000/patient" style="width:100vw; height: 100vh;" >
+            <iframe src="http://192.168.5.4:3000/patient" style="width:100vw; height: 100vh;" >
             </iframe>
 
 
