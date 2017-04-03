@@ -11,7 +11,7 @@
         <script src="/map/js/jquery-1.10.2.min.js"></script>
         <script src="/map/js/bootstrap.min.js"></script>
 
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoLHs_3FwL58co5zCnTwVqayigUjV9ySw&callback=initMap" async defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoLHs_3FwL58co5zCnTwVqayigUjV9ySw&callback=initMap&sensor=true" async defer></script>
         <style>
             html, body {
                 height: 100%;
@@ -58,7 +58,7 @@
         <div id="map"></div>
         <script type="text/javascript">
             var map;
-
+            var marker_user;
             var tab = [];
 
             function initMap() {
@@ -70,7 +70,7 @@
 
             function getLocation() {
                 if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(showPosition, hidePosition);
+                    navigator.geolocation.watchPosition(showPosition, hidePosition);
                 } else {
                     alert("Geolocation is not supported by this browser. Now we trying to get your location through your IP address.");
                     ipPosition();
@@ -84,16 +84,22 @@
                     lng: parseFloat(position.coords.longitude)
                 };
                 map.panTo(pos);
-                var marker = new google.maps.Marker({
+              
+                if(marker_user){
+                    marker_user.setMap(null);
+                }
+                marker_user = new google.maps.Marker({
                     position: pos,
                     map: map,
                     animation: google.maps.Animation.BOUNCE
                 });
+                socket.emit('new_pos', "Une nouvelle position ! ");
+                
                 /*
                  var infoWindow = new google.maps.InfoWindow({
                  content: "Vous êtes ici ! "
                  });*/
-                marker.setIcon("http://maps.google.com/mapfiles/ms/icons/blue-dot.png");
+                marker_user.setIcon("http://maps.google.com/mapfiles/ms/icons/blue-dot.png");
                 //	infoWindow.open(map, marker);
             }
 
@@ -210,7 +216,8 @@
                 });
 
             });
-
+            
+            //Ajout de ce qui est connecter dans la carte
             socket.on('connected', function (data) {
                 if (data.user.type == "infirmier") {
                     addMarker(data.user.pos, data.user);

@@ -96,7 +96,9 @@ io.on('connection', function (socket) {
     });
 
 
-
+    socket.on('new_pos', function(data){
+       console.log(data); 
+    });
 
 
     socket.on('deconnexion', function (data) {
@@ -124,7 +126,6 @@ io.on('connection', function (socket) {
     //Ajout de commande dans la liste
 
     socket.on('ajout_liste', function (data) {          //Information du patient
-
         if (liste.hasOwnProperty(data.email)) {
             sockets[data.email].emit("info_dmd", "Vous aver deja envoyer une demande à <strong>" + socket.user.prenom + " " + socket.user.nom + "</strong>! ");
         } else {
